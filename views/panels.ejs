@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ServiceNOW -APPEng Dashboard</title>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/datepicker3.css" rel="stylesheet">
+<link href="css/bootstrap-table.css" rel="stylesheet">
+<link href="css/styles.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-select.css">
+
+
+<style>
+.personicon {
+		font-size: 217px;
+		color:#F58723;
+}
+
+.address {
+		font-size: 37px;
+		text-decoration: underline;
+		padding-bottom: 10px;
+}
+
+a.list-group-item {
+		height: auto;
+		min-height: 250px;
+}
+
+a.list-group-item:hover, a.list-group-item:focus {
+		border-left:10px solid #F58723;
+		border-right:10px solid #F58723;
+}
+
+a.list-group-item {
+		border-left:10px solid transparent;
+		border-right:10px solid transparent;
+}
+
+.modal-body {
+		max-height: 1000px;
+}
+</style>
+
+<!--[if lt IE 9]>
+<script src="js/html5shiv.js"></script>
+<script src="js/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<body>
+
+
+
+
+
+
+
+<div class="modal fade bs-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+		<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h4 class="modal-title" id ="modalname">Full Width</h4>
+		</div>
+		<div class="modal-body">
+
+			<div class="row">
+
+			<div class="col-xs-12 col-md-4">
+
+			</div>
+
+
+
+
+
+				<form role="form" action="" method="post">
+
+
+
+
+					<div class="form-group">
+						<label>Status</label>
+						<textarea class="form-control" rows="10" name="packages" disable=true></textarea>
+					</div>
+
+
+
+
+			</form>
+
+
+
+
+
+
+
+
+
+		</div>
+
+
+
+	</div>
+
+
+
+
+		<div class="modal-footer">
+
+
+		<button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+
+	</div>
+		</div>
+	</div>
+	</div>
+</div>
+
+
+<div class="modal fade bs-example-modal-lg" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+		<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h4 class="modal-title" id ="modalname">Details</h4>
+			</div>
+		<div class="modal-body">
+
+
+			<table data-toggle="table" data-url="" id="ticketper1" data-pagination="true"  data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1"  data-sort-name="name" data-sort-order="desc">
+					<thead>
+					<tr>
+
+
+						<th data-field="number" data-sortable="true">Ticket No</th>
+						<th data-field="u_environment" >Environment</th>
+						<th data-field="priority"  data-sortable="true">Priority</th>
+						<th data-field="incident_state" data-sortable="true">Status</th>
+						<th data-field="short_description" >Description</th>
+
+
+
+
+
+
+					</tr>
+					</thead>
+
+			</table>
+
+		</div>
+		<div class="modal-footer">
+		<button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+
+		</div>
+	</div>
+	</div>
+</div>
+
+
+<div class="modal fade bs-example-modal-lg" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+		<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h4 class="modal-title" id ="modalname">Details</h4>
+
+
+		</div>
+		<div class="modal-body">
+
+
+			Category:
+		<select class="selectpicker"  data-width="100%">
+			<option >Production</option>
+			<option>Staging</option>
+		</select>
+
+
+			<table data-toggle="table" data-url="" id="ticketper2" data-pagination="true"  data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1"  data-sort-name="name" data-sort-order="desc">
+					<thead>
+					<tr>
+
+
+						<th data-field="number" data-sortable="true">Ticket No</th>
+						<th data-field="priority"  data-sortable="true">Priority</th>
+						<th data-field="duration" data-sortable="true">Status</th>
+						<th data-field="overtime" data-sortable="true">Overtime(Hrs)</th>
+
+
+
+
+
+
+					</tr>
+					</thead>
+
+			</table>
+
+		</div>
+		<div class="modal-footer">
+		<button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+
+		</div>
+	</div>
+	</div>
+</div>
+
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><span>Dock</span>  IT</a>
+				<ul class="user-menu">
+					<li class="dropdown pull-right">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span>  <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+
+							<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+
+		</div><!-- /.container-fluid -->
+	</nav>
+
+	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+		<form role="search">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Search">
+			</div>
+		</form>
+		<ul class="nav menu">
+
+			<li><a href="/main"><a href="/main"><span class="glyphicon glyphicon-dashboard"></span> DockerFile</a></li>
+			<li><a href="/addimage"><span class="glyphicon glyphicon-th"></span>DockerImage</a></li>
+			<li class="active"><a href="/rege"><span class="glyphicon glyphicon-stats"></span>Registry</a></li>
+			<li><a href="/stat"><span class="glyphicon glyphicon-list-alt"></span> Stats</a></li>
+
+		</ul>
+
+	</div><!--/.sidebar-->
+
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+				<li class="active">Registry</li>
+			</ol>
+		</div><!--/.row-->
+
+
+
+
+		<div class="row">
+
+
+
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+
+					<div class="panel-body">
+						<table data-toggle="table" data-url="http://localhost:3000/repo" id="ticketde"  data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
+								<thead>
+								<tr>
+
+									  <th data-field="name" >Name</th>
+										<th data-field="description" data-sortable="true">Description</th>
+										<th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents" >Details</th>
+
+
+
+
+
+								</tr>
+								</thead>
+
+						</table>
+					</div>
+				</div>
+			</div>
+
+
+		</div><!--/.row-->
+
+
+
+
+
+
+
+
+
+	</div><!--/.main-->
+
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/chart.min.js"></script>
+	<script src="js/chart-data.js"></script>
+	<script src="js/easypiechart.js"></script>
+	<script src="js/easypiechart-data.js"></script>
+	<script src="js/bootstrap-datepicker.js"></script>
+	<script src="js/bootstrap-table.js"></script>
+	<script type="text/javascript" src="js/jquery.canvasjs.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap-select.js"></script>
+	<script src="js/raphael.2.1.0.min.js"></script>
+	<script src="js/justgage.1.0.1.min.js"></script>
+	<script>
+		!function ($) {
+			$(document).on("click","ul.nav li.parent > a > span.icon", function(){
+				$(this).find('em:first').toggleClass("glyphicon-minus");
+			});
+			$(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+		}(window.jQuery);
+
+		$(window).on('resize', function () {
+		  if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+		})
+		$(window).on('resize', function () {
+		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+		})
+
+
+
+
+
+function operateFormatter(value, row, index) {
+				return [
+				'<button class="btn btn-primary" href="javascript:void(0)">Details</button>'
+				].join('');
+		}
+
+
+function operateFormatter1(value, row, index) {
+						return [
+						'<button class="btn btn-success" title="info" href="javascript:void(0)">info</button>'
+						].join('');
+			}
+
+window.operateEvents = {
+
+				'click .btn-primary': function (e, value, row, index) {
+						var user = row.name;
+						console.log(user);
+
+
+						var modal = $('#exampleModal')
+						modal.find('.modal-title').text(user)
+
+						var $table = $('#ticketper');
+
+
+						$('#exampleModal').modal('show');
+
+						$.get('http://localhost:3000/image?lib=' , {}, function(data){
+
+							wrk = data.json[0].total;
+							var percentage = (wrk/all)*100;
+
+							document.getElementById("workin").innerHTML = Math.round(percentage)+'%';
+							$('#easypiechart-blue').data('easyPieChart').update(percentage);
+							//document.getElementById("easypiechart-blue").data-percent="25";
+
+
+						});
+
+
+				}
+
+
+		};
+
+
+
+	</script>
+</body>
+
+</html>

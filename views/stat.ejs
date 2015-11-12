@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ServiceNOW -APPEng Dashboard</title>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/datepicker3.css" rel="stylesheet">
+<link href="css/styles.css" rel="stylesheet">
+<link href="css/bootstrap-table.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" media="all" href="css/daterangepicker-bs3.css" />
+<link href="nv.d3.css" rel="stylesheet" type="text/css">
+
+
+<style>
+.personicon {
+		font-size: 217px;
+		color:#F58723;
+}
+
+.address {
+		font-size: 37px;
+		text-decoration: underline;
+		padding-bottom: 10px;
+}
+
+a.list-group-item {
+		height: auto;
+		min-height: 250px;
+}
+
+a.list-group-item:hover, a.list-group-item:focus {
+		border-left:10px solid #F58723;
+		border-right:10px solid #F58723;
+}
+
+a.list-group-item {
+		border-left:10px solid transparent;
+		border-right:10px solid transparent;
+}
+</style>
+
+<!--[if lt IE 9]>
+<script src="js/html5shiv.js"></script>
+<script src="js/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<script src="js/jquery-1.11.1.min.js"></script>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><span>ServiceNOW</span>  APPEng</a>
+				<ul class="user-menu">
+					<li class="dropdown pull-right">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span>  <%= user.username %> <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+
+							<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+
+		</div><!-- /.container-fluid -->
+	</nav>
+
+	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+		<form role="search">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Search">
+			</div>
+		</form>
+		<ul class="nav menu">
+			<li><a href="/main"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
+			<li><a href="/ticket"><span class="glyphicon glyphicon-th"></span> Tickets</a></li>
+			<li><a href="/wi"><span class="glyphicon glyphicon-stats"></span> Team</a></li>
+			<li class="active"><a href=""><span class="glyphicon glyphicon-list-alt"></span> Stats</a></li>
+
+		</ul>
+
+	</div><!--/.sidebar-->
+
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+				<li class="active">Stats</li>
+			</ol>
+		</div><!--/.row-->
+
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+	</div><!--/.main-->
+
+	<script src="js/jquery-1.11.1.min.js"></script>
+
+
+
+
+
+
+	<script src="js/bootstrap-table.js"></script>
+	<script type="text/javascript" src="js/jquery.canvasjs.min.js"></script>
+
+	<script src="js/easypiechart.js"></script>
+	<script src="js/easypiechart-data.js"></script>
+	<script src="js/bootstrap-datepicker.js"></script>
+	<script src="js/Chart.js"></script>
+	<script src="nv.d3.js"></script>
+	<script type="text/javascript" src="js/moment.js"></script>
+	<script type="text/javascript" src="js/daterangepicker.js"></script>
+	<script>
+		!function ($) {
+			$(document).on("click","ul.nav li.parent > a > span.icon", function(){
+				$(this).find('em:first').toggleClass("glyphicon-minus");
+			});
+			$(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+		}(window.jQuery);
+
+		$(window).on('resize', function () {
+		  if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+		})
+		$(window).on('resize', function () {
+		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+		})
+
+
+		function ISODateString(d){
+			function pad(n){return n<10 ? '0'+n : n}
+			return d.getUTCFullYear()+'-'+ pad(d.getUTCMonth()+1)+'-'+ pad(d.getUTCDate()) +' '+ pad(d.getUTCHours())+':'+ pad(d.getUTCMinutes())+':'+ pad(d.getUTCSeconds());
+		}
+
+		function generategraph(start,stop){
+
+
+			if( !start ) {
+				var d = new Date();
+
+				start = ISODateString(d);
+
+				d.setDate(d.getDate()-90);
+				stop = ISODateString(d);
+
+				console.log(start);
+				console.log(stop);
+			}
+
+
+			var list='';
+			var li = [];
+			$.get('http://localhost:3000/statbysys?start='+start+"&stop="+stop , {}, function(data){
+
+				list = data;
+				var li = [];
+				//console.log(list);
+
+
+				for(var i= 0;i<list.length;i++){
+
+					var con = new Object();
+
+					con.legendText = list[i].type;
+					con.label = list[i].type;
+					con.y = list[i].total;
+					li[i] = con;
+
+				}
+
+				var chart = new CanvasJS.Chart("chartContainer",
+				{
+					title:{
+
+					},
+					exportFileName: "Pie Chart",
+
+											animationEnabled: true,
+					legend:{
+						verticalAlign: "center",
+						horizontalAlign: "left"
+					},
+					data: [
+					{
+						type: "pie",
+						indexLabelPlacement: "inside",
+						showInLegend: true,
+						indexLabelFontSize: 12,
+						indexLabelFontColor: "Black",
+						toolTipContent: "{legendText}: <strong>{y}</strong>",
+						indexLabel: "#percent%",
+						dataPoints:li
+				}
+				]
+				});
+			chart.render();
+	});
+
+}
+
+
+
+
+
+
+	generategraph();
+
+
+	function generategraphsla(start,stop){
+
+
+		if( !start ) {
+			var d = new Date();
+
+			start = ISODateString(d);
+
+			d.setDate(d.getDate()-90);
+			stop = ISODateString(d);
+
+			console.log(start);
+			console.log(stop);
+		}
+
+
+		var list='';
+
+		$.get('http://localhost:3000/slatotstat?start='+start+"&stop="+stop , {}, function(data){
+
+			list = data;
+			var li = [];
+			//console.log(list);
+
+
+
+
+			var cnt = -1;
+
+			for (var prop in list) {
+				if (list.hasOwnProperty(prop)) {
+					// or if (Object.prototype.hasOwnProperty.call(obj,prop)) for safety...
+
+					var con = new Object();
+					var name = prop.split(" ");
+					cnt++;
+
+					con.legendText = name[0];
+					con.label = name[0];
+					con.y = list[prop];
+					li[cnt] = con;
+				}
+			}
+
+				console.log(li);
+
+	var chart = new CanvasJS.Chart("chartContainer12",
+		{
+
+			animationEnabled: true,
+			axisY: {
+				title: "Count"
+			},
+			axisX: {
+				title: "Name",
+				labelAngle: 45,
+				labelAutoFit: true,
+				interval: 1
+			},
+			legend: {
+				verticalAlign: "bottom",
+				horizontalAlign: "center"
+			},
+			theme: "theme1",
+			data: [
+
+			{
+				type: "column",
+				showInLegend: false,
+				indexLabel: "{y}",
+				dataPoints:li
+			}
+			]
+		});
+
+		chart.render();
+
+		});
+
+	}
+
+
+
+
+
+
+	generategraphsla();
+
+	function generateDuration(){
+
+
+		var list='';
+		var li = [];
+		$.get('http://localhost:3000/statbytime' , {}, function(data){
+
+			list = data;
+			var li = [];
+			//console.log(list);
+
+
+			for(var i= 0;i<list.length;i++){
+
+				var con = new Object();
+
+				con.legendText = list[i].duration;
+				con.label = list[i].duration;
+				con.y = list[i].total;
+				li[i] = con;
+
+			}
+		var chart = new CanvasJS.Chart("chartContainer5",
+	{
+
+		animationEnabled: true,
+		axisY: {
+			title: "Count"
+		},
+		axisX: {
+			title: "Duration"
+		},
+		legend: {
+			verticalAlign: "bottom",
+			horizontalAlign: "center"
+		},
+		theme: "theme2",
+		data: [
+
+		{
+			type: "column",
+			showInLegend: false,
+			legendText: "Duration",
+			indexLabel: "{y}",
+			dataPoints:li
+		}
+		]
+	});
+
+	chart.render();
+
+});
+
+	}
+
+
+	generateDuration();
+
+
+
+
+	function generateTy(){
+
+
+		var list='';
+		var li = [];
+		$.get('http://localhost:3000/statbyty' , {}, function(data){
+
+			list = data;
+			var li = [];
+			//console.log(list);
+
+
+			for(var i= 0;i<list.length;i++){
+
+				var con = new Object();
+
+				if( list[i].type !='Customer Technical Support(CTS/Helpdesk)'){
+
+					con.legendText = list[i].type;
+					con.label = list[i].type;
+
+
+
+				}else{
+
+					con.legendText = 'CTS/Helpdesk';
+					con.label = 'CTS/Helpdesk';
+
+
+			}
+
+				con.y = list[i].total;
+				li[i] = con;
+
+			}
+		var chart = new CanvasJS.Chart("chartContainer6",
+	{
+
+		animationEnabled: true,
+		axisY: {
+			title: "Count"
+		},
+		axisX: {
+			title: "Type"
+		},
+		legend: {
+			verticalAlign: "bottom",
+			horizontalAlign: "center"
+		},
+		theme: "theme2",
+		data: [
+
+		{
+			type: "column",
+			showInLegend: false,
+			legendText: "Duration",
+			indexLabel: "{y}",
+			dataPoints:li
+		}
+		]
+	});
+
+	chart.render();
+
+});
+
+	}
+
+
+	generateTy();
+
+
+	function generatepri(){
+
+
+		var list='';
+		var li = [];
+		$.get('http://localhost:3000/statbypri' , {}, function(data){
+
+			list = data;
+			var li = [];
+			//console.log(list);
+
+
+			for(var i= 0;i<list.length;i++){
+
+				var con = new Object();
+
+
+
+					con.legendText = list[i].type;
+					con.label = list[i].type;
+
+
+				con.y = list[i].total;
+				li[i] = con;
+
+			}
+			var chart = new CanvasJS.Chart("chartContainer7",
+			{
+				title:{
+
+				},
+				exportFileName: "Pie Chart",
+
+										animationEnabled: true,
+				legend:{
+					verticalAlign: "center",
+					horizontalAlign: "left"
+				},
+				data: [
+				{
+					type: "pie",
+					showInLegend: true,
+					indexLabelFontSize: 12,
+					indexLabelFontColor: "Black",
+					toolTipContent: "{legendText}: <strong>{y}</strong>",
+					indexLabel: "#percent%",
+					dataPoints:li
+			}
+			]
+			});
+		chart.render();
+		});
+
+	}
+
+
+	generatepri();
+
+
+
+	function generateimp(){
+
+
+		var list='';
+		var li = [];
+		$.get('http://localhost:3000/statbyimp' , {}, function(data){
+
+			list = data;
+			var li = [];
+			//console.log(list);
+
+
+			for(var i= 0;i<list.length;i++){
+
+				var con = new Object();
+
+
+
+					con.legendText = list[i].type;
+					con.label = list[i].type;
+
+
+				con.y = list[i].total;
+				li[i] = con;
+
+			}
+			var chart = new CanvasJS.Chart("chartContainer8",
+			{
+				title:{
+
+				},
+				exportFileName: "Pie Chart",
+
+										animationEnabled: true,
+				legend:{
+					verticalAlign: "center",
+					horizontalAlign: "left"
+				},
+				data: [
+				{
+					type: "pie",
+					showInLegend: true,
+					indexLabelFontSize: 12,
+					indexLabelFontColor: "Black",
+					toolTipContent: "{legendText}: <strong>{y}</strong>",
+					indexLabel: "#percent%",
+					dataPoints:li
+			}
+			]
+			});
+		chart.render();
+		});
+
+	}
+
+
+	generateimp();
+
+
+	function generategraph3(name){
+
+		var list='';
+		var li = [];
+		$.get('http://localhost:3000/ticketbyperson?name='+name , {}, function(data){
+
+			list = data;
+			var li = [];
+			console.log(list);
+
+
+			for(var i= 0;i<list.length;i++){
+
+				var con = new Object();
+
+				con.legendText = list[i].type;
+				con.label = list[i].type;
+				con.y = list[i].total;
+				li[i] = con;
+
+			}
+
+	var chart = new CanvasJS.Chart("chartContainer2",
+	{
+		title:{
+			text: "Ticket Details-"+name
+		},
+		exportFileName: "Pie Chart",
+		exportEnabled: true,
+								animationEnabled: true,
+		legend:{
+			verticalAlign: "bottom",
+			horizontalAlign: "center"
+		},
+		data: [
+		{
+			type: "pie",
+			showInLegend: true,
+			toolTipContent: "{legendText}: <strong>{y}</strong>",
+			indexLabel: "{label} #percent%",
+			dataPoints:li
+	}
+	]
+	});
+
+	chart.render();
+
+
+});
+
+}
+
+
+
+function operateFormatter(value, row, index) {
+				return [
+				'<button class="btn btn-primary" href="javascript:void(0)">Details</button>'
+				].join('');
+		}
+
+window.operateEvents = {
+
+				'click .btn-primary': function (e, value, row, index) {
+						var user = row.user;
+						console.log(user);
+						generategraph3(user);
+				},
+
+		};
+
+
+
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+############################################################
+# Dockerfile
+############################################################
+
+# Set the base image
+FROM {{base_os}}:{{version|default("latest")}}
+
+# File Author / Maintainer
+MAINTAINER {{author}}
+
+# Install Packages
+
+{% if  base_os == 'ubuntu' %}
+{% for package in packages %}
+RUN apt-get install -y {{package}}
+{% endfor %}
+{% endif %}
+
+
+{% if base_os === 'centos' %}
+RUN yum install -y epel-release
+{% for package in packages %}
+RUN yum install -y {{package}}
+{% endfor %}
+{% endif %}
+
+{% if base_os === 'fedora' %}
+{% for package in packages %}
+yum install -y epel-release
+RUN yum install -y {{package}}
+{% endfor %}
+{% endif %}
+
+
+
+#create folders
+
+{% if folders != "" %}
+{% for folder in folders %}
+RUN mkdir -p {{folder}}
+{% endfor %}
+{% endif %}
+
+
+#attache volumes
+
+{% if volumes != "" %}
+{% for volume in volumes %}
+VOLUME ["{{volume}}"]
+{% endfor %}
+{% endif %}
+
+# Usage: ADD [source directory or URL] [destination directory]
+
+{% if files != "" %}
+{% for file in files %}
+ADD {{file}}
+{% endfor %}
+{% endif %}
+
+#ports exposed
+
+
+{% if ports != "" %}
+{% for port in ports %}
+EXPOSE {{port}}
+{% endfor %}
+{% endif %}

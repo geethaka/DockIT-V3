@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>ServiceNOW -TechOps Dashboard</title>
+
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/datepicker3.css" rel="stylesheet">
+	<link href="css/styles.css" rel="stylesheet">
+	<link href="css/bootstrap-table.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" media="all" href="css/daterangepicker-bs3.css" />
+	<link href="nv.d3.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="css/cs-select.css" />
+
+	<!--[if lt IE 9]>
+	<script src="js/html5shiv.js"></script>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+</head>
+
+
+<script src="js/jquery-1.11.1.min.js"></script>
+
+<body>
+
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><span>Dock</span>  IT</a>
+				<ul class="user-menu">
+					<li class="dropdown pull-right">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span>  <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+
+							<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div><!-- /.container-fluid -->
+	</nav>
+
+	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+		<form role="search">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Search">
+			</div>
+		</form>
+		<ul class="nav menu">
+			<li><a href="/main"><span class="glyphicon glyphicon-dashboard"></span> DockerFile</a></li>
+			<li class="active"><a href="/addimage"><span class="glyphicon glyphicon-th"></span>DockerImage</a></li>
+			<li><a href="/rege"><span class="glyphicon glyphicon-stats"></span>Registry</a></li>
+			<li><a href="/stat"><span class="glyphicon glyphicon-list-alt"></span> Stats</a></li>
+
+
+
+		</ul>
+
+	</div><!--/.sidebar-->
+
+
+
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+				<li class="active">Dokcer Image</li>
+			</ol>
+		</div><!--/.row-->
+
+
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">Docker Image Services</div>
+					<div class="panel-body">
+
+							<form role="form" action="/addimage" method="post">
+
+
+								<div class="form-group">
+									<label>Name</label>
+									<input class="form-control" value="fsdf" name="namef">
+								</div>
+
+								<div class="form-group">
+									<label>Status</label>
+									<textarea class="form-control" rows="10" name="packages" disable=true><%= data %></textarea>
+								</div>
+
+								<div class="form-group">
+									<label>Repository</label>
+									<input class="form-control" placeholder="" name="repo">
+								</div>
+
+								<div class="form-group">
+									<label>Name</label>
+									<input class="form-control" placeholder="" name="name">
+								</div>
+
+								<div class="form-group">
+									<label>Version</label>
+									<input class="form-control" placeholder="" name="version">
+								</div>
+
+
+								<button type="submit" class="btn btn-primary">Push</button>
+								<button type="reset" class="btn btn-default">Reset</button>
+
+
+
+
+
+
+
+
+
+						</form>
+					</div>
+				</div>
+			</div><!-- /.col-->
+		</div><!-- /.row -->
+
+
+
+
+
+
+
+
+
+	</div>	<!--/.main-->
+
+
+	<script type="text/javascript" src="js/jquery.canvasjs.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/easypiechart.js"></script>
+	<script src="js/easypiechart-data.js"></script>
+	<script src="js/bootstrap-datepicker.js"></script>
+	<script src="js/Chart.js"></script>
+	<script src="nv.d3.js"></script>
+	<script type="text/javascript" src="js/moment.js"></script>
+	<script type="text/javascript" src="js/daterangepicker.js"></script>
+
+</body>
+
+</html>
